@@ -1,24 +1,23 @@
 package com.example.controlapp
 
-import android.graphics.drawable.Icon
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AddAPhoto
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,29 +25,51 @@ class MainActivity : ComponentActivity() {
         setContent {
             AlignYourBodyElement()
         }
+
     }
 }
 
 // Step: Align your body - Alignment
 @Composable
-fun AlignYourBodyElement(
-    modifier: Modifier = Modifier
-) {
+fun AlignYourBodyElement()
+{
     // Implement composable here
-    Column(
-        modifier = modifier
-    ) {
-        Icon(
-            Icons.Rounded.AddAPhoto,
-            contentDescription = null
+    Row(modifier = Modifier.padding(all = 8.dp))
+    {
+        Image(
+            painter = painterResource(R.drawable.camara),
+            contentDescription = null,
+            modifier = Modifier
+                // Set image size to 40 dp
+                .size(40.dp)
+                // Clip image to be shaped as a circle
+                .clip(CircleShape)
+                .border(1.5.dp, MaterialTheme.colors.secondary, CircleShape)
         )
-        Text(
-            text = stringResource(R.string.boton_camara)
-        )
+
+        // Add a horizontal space between the image and the column
+        Spacer(modifier = Modifier.width(4.dp))
+
+        Column {
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp) {
+                Text(
+                    text = stringResource(R.string.boton_camara),
+                    color = MaterialTheme.colors.secondaryVariant,
+                    style = MaterialTheme.typography.body2
+                )
+            }
+        }
     }
 }
 
-@Preview
+@Preview(name = "Light Mode")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "Dark Mode"
+)
 @Composable
 fun PreviewAlignYourBodyElement() {
     AlignYourBodyElement()
