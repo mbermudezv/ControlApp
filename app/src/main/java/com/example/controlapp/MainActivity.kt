@@ -3,40 +3,43 @@ package com.example.controlapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Inicio()
-        }
 
+                CameraAppTheme {
+
+                    val navController = rememberNavController()
+
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colors.background
+                    ) {
+                        NavHost(
+                            navController = navController,
+                            startDestination = Route.VIDEO
+                        ) {
+                            composable(Route.VIDEO) {
+                                VideoCaptura(navController = navController)
+                            }
+                        }
+                    }
+                }
+
+        }
     }
 }
 
-@Composable
-fun Inicio()
-{
-    Row(modifier = Modifier.padding(all = 8.dp))
-    {
-        Column {
-            Text(
-                "Hola Mundo"
-                )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewInicio() {
-    Inicio()
+object Route {
+    const val VIDEO = "video"
+    const val VIDEO_PREVIEW = "video_preview"
 }
