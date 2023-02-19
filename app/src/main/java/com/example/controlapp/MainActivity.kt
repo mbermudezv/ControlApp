@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.controlapp.Route.VIDEO_PREVIEW_ARG
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +32,11 @@ class MainActivity : ComponentActivity() {
                             composable(Route.VIDEO) {
                                 VideoCaptura(navController = navController)
                             }
+
+                            composable(Route.VIDEO_PREVIEW_FULL_ROUTE) {
+                                val uri = it.arguments?.getString(VIDEO_PREVIEW_ARG) ?: ""
+                                VideoPreviewScreen(uri = uri)
+                            }
                         }
                     }
                 }
@@ -41,5 +47,7 @@ class MainActivity : ComponentActivity() {
 
 object Route {
     const val VIDEO = "video"
+    const val VIDEO_PREVIEW_FULL_ROUTE = "video_preview/{uri}"
     const val VIDEO_PREVIEW = "video_preview"
+    const val VIDEO_PREVIEW_ARG = "uri"
 }
