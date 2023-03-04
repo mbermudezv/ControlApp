@@ -1,17 +1,14 @@
 package com.example.controlapp
 
 import android.util.Log
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.ExoPlayer
@@ -32,19 +29,27 @@ fun VideoPreviewScreen(
     }
 
     DisposableEffect(
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
+
+        Column
+        {
             AndroidView(
                 factory = { context ->
+
                     StyledPlayerView(context).apply {
                         player = exoPlayer
                     }
+
                 },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.padding(1.dp)
             )
-            VideoPreviewScreen()
+
+            // Compose Button
+            androidx.compose.material.Button(onClick = {Log.d("Guardar","Guardar") }) {
+                Text("Guardar")
+            }
+
         }
+
     ) {
         onDispose {
             exoPlayer.release()
@@ -52,27 +57,3 @@ fun VideoPreviewScreen(
     }
 }
 
-@Composable
-fun VideoPreviewScreen() {
-    Row()
-    {
-        Column {
-            IconButton(
-                onClick = {
-                    Log.d("YOUR TAG", "Hey You Just Clicked Me!");
-                },
-                modifier = Modifier
-                    .padding(bottom = 32.dp)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.listo),
-                    contentDescription = "",
-                    modifier = Modifier.size(64.dp)
-                )
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text("Guardar")
-            }
-        }
-    }
-
-}
